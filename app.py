@@ -11,10 +11,17 @@ app.config["SECRET_KEY"] = "your_secret_key_here"
 app.config["SQLALCHEMY_DATABASE_URI"] = (
     "postgresql://postgres:Nopassword%4003@localhost/test"
 )
+#import os
+
 db_url = os.getenv("DATABASE_URL")
+
+if not db_url:
+    raise ValueError("DATABASE_URL is not set")
 
 if db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql://", 1)
+
+SQLALCHEMY_DATABASE_URI = db_url
 
 SQLALCHEMY_DATABASE_URI = db_url
 loginmanager = LoginManager()
